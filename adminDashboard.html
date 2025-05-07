@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background-color: #f0f2f5;
+      color: #333;
+    }
+    nav {
+      background-color: #1f2d3d;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+    nav .logo {
+      font-size: 22px;
+      font-weight: bold;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+      margin: 0;
+      padding: 0;
+    }
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 15px;
+      transition: color 0.3s;
+    }
+    nav ul li a:hover {
+      color: #1abc9c;
+    }
+    .container {
+      padding: 30px;
+      max-width: 1200px;
+      margin: auto;
+    }
+    h2 {
+      margin-bottom: 20px;
+      color: #2c3e50;
+      border-left: 4px solid #1abc9c;
+      padding-left: 10px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background-color: white;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    th {
+      background-color: #f9fafb;
+    }
+    .charts {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .chart-wrapper {
+      background-color: white;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      height: 220px;
+    }
+    .chart-wrapper canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+    .profile {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      margin-top: 20px;
+    }
+    .profile h3 {
+      margin-bottom: 15px;
+      color: #2c3e50;
+    }
+    .profile p {
+      font-size: 16px;
+      margin: 8px 0;
+    }
+    .profile input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    .profile button {
+      padding: 10px 20px;
+      background-color: #1abc9c;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+    }
+    .profile button:hover {
+      background-color: #16a085;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">Admin Dashboard</div>
+    <ul>
+      <li><a href="#overview" onclick="showPage('overview')">Overview</a></li>
+      <li><a href="#users" onclick="showPage('users')">Manage Users</a></li>
+      <li><a href="#profile" onclick="showPage('profile')">Profile</a></li>
+    </ul>
+  </nav>
+
+  <div class="container" id="overview-page">
+    <h2>User Statistics</h2>
+    <div class="charts">
+      <div class="chart-wrapper"><canvas id="chart1"></canvas></div>
+      <div class="chart-wrapper"><canvas id="chart2"></canvas></div>
+      <div class="chart-wrapper"><canvas id="chart3"></canvas></div>
+      <div class="chart-wrapper"><canvas id="chart4"></canvas></div>
+      <div class="chart-wrapper"><canvas id="chart5"></canvas></div>
+    </div>
+  </div>
+
+  <div class="container" id="users-page" style="display: none;">
+    <h2>All User Accounts</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>User ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>001</td>
+          <td>John Admin</td>
+          <td>admin@example.com</td>
+          <td>Admin</td>
+        </tr>
+        <tr>
+          <td>002</td>
+          <td>Jane Student</td>
+          <td>jane@student.com</td>
+          <td>Student</td>
+        </tr>
+        <tr>
+          <td>003</td>
+          <td>Bob Seeker</td>
+          <td>bob@seeker.com</td>
+          <td>Job Seeker</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="container" id="profile-page" style="display: none;">
+    <div class="profile" id="profile-view">
+      <h3>Admin Profile</h3>
+      <p><strong>Name:</strong> <span id="admin-name">John Admin</span></p>
+      <p><strong>Role:</strong> <span id="admin-role">Admin</span></p>
+      <p><strong>Company Name:</strong> <span id="admin-company">Admin Corp</span></p>
+      <p><strong>Email:</strong> <span id="admin-email">admin@example.com</span></p>
+      <button onclick="editProfile()">Edit Profile</button>
+    </div>
+
+    <div class="profile" id="profile-edit" style="display: none;">
+      <h3>Edit Admin Profile</h3>
+      <form id="profile-form">
+        <label for="name">Name:</label>
+        <input type="text" id="edit-name" value="John Admin">
+        
+        <label for="role">Role:</label>
+        <input type="text" id="edit-role" value="Admin">
+        
+        <label for="company">Company Name:</label>
+        <input type="text" id="edit-company" value="Admin Corp">
+        
+        <label for="email">Email:</label>
+        <input type="email" id="edit-email" value="admin@example.com">
+        
+        <button type="button" onclick="saveProfile()">Save Changes</button>
+        <button type="button" onclick="cancelEdit()">Cancel</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function showPage(page) {
+      document.getElementById('overview-page').style.display = 'none';
+      document.getElementById('users-page').style.display = 'none';
+      document.getElementById('profile-page').style.display = 'none';
+      document.getElementById(`${page}-page`).style.display = 'block';
+    }
+
+    function editProfile() {
+      document.getElementById('profile-view').style.display = 'none';
+      document.getElementById('profile-edit').style.display = 'block';
+    }
+
+    function cancelEdit() {
+      document.getElementById('profile-view').style.display = 'block';
+      document.getElementById('profile-edit').style.display = 'none';
+    }
+
+    function saveProfile() {
+      const name = document.getElementById('edit-name').value;
+      const role = document.getElementById('edit-role').value;
+      const company = document.getElementById('edit-company').value;
+      const email = document.getElementById('edit-email').value;
+
+      document.getElementById('admin-name').innerText = name;
+      document.getElementById('admin-role').innerText = role;
+      document.getElementById('admin-company').innerText = company;
+      document.getElementById('admin-email').innerText = email;
+
+      cancelEdit(); // Hide the edit form and show the view mode
+    }
+
+    const chartData = [
+      { id: 'chart1', type: 'bar', label: 'User Roles', data: [10, 20, 5], labels: ['Admins', 'Students', 'Job Seekers'] },
+      { id: 'chart2', type: 'pie', label: 'Account Status', data: [50, 30, 20], labels: ['Active', 'Inactive', 'Pending'] },
+      { id: 'chart3', type: 'line', label: 'Monthly Signups', data: [5, 10, 8, 12, 15], labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'] },
+      { id: 'chart4', type: 'doughnut', label: 'Job Postings', data: [40, 30, 20, 10], labels: ['IT', 'Marketing', 'Sales', 'HR'] },
+      { id: 'chart5', type: 'bar', label: 'Applications per Job', data: [100, 80, 60, 40], labels: ['Developer', 'Designer', 'Manager', 'Analyst'] },
+    ];
+
+    chartData.forEach(cfg => {
+      new Chart(document.getElementById(cfg.id), {
+        type: cfg.type,
+        data: {
+          labels: cfg.labels,
+          datasets: [{
+            label: cfg.label,
+            data: cfg.data,
+            backgroundColor: ['#3498db', '#2ecc71', '#e74c3c', '#9b59b6', '#f1c40f'],
+            borderColor: '#fff',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          maintainAspectRatio: false,
+          responsive: true,
+          plugins: { legend: { position: 'bottom' } }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
