@@ -63,7 +63,7 @@
       font-size: 14px;
       color: #555;
     }
-    .job-card button {
+    .job-card button, .edit-btn, .save-btn {
       margin-top: 10px;
       padding: 8px 15px;
       background-color: #3498db;
@@ -72,8 +72,16 @@
       border-radius: 5px;
       cursor: pointer;
     }
-    .job-card button:hover {
+    .job-card button:hover, .edit-btn:hover, .save-btn:hover {
       background-color: #2980b9;
+    }
+    input {
+      display: block;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      padding: 5px;
+      width: 300px;
+      max-width: 100%;
     }
   </style>
 </head>
@@ -125,11 +133,19 @@
 
   <div class="container" id="profile-page" style="display: none;">
     <h2>Profile</h2>
-    <p>Name: John Doe</p>
-    <p>Email: johndoe@example.com</p>
-    <p>Major: Computer Science</p>
-    <p>Interests: Coding, AI, Web Development</p>
-    <button>Edit</button>
+    <p><strong>Name:</strong> <span id="profile-name">John Doe</span></p>
+    <p><strong>Email:</strong> <span id="profile-email">johndoe@example.com</span></p>
+    <p><strong>Major:</strong> <span id="profile-major">Computer Science</span></p>
+    <p><strong>Interests:</strong> <span id="profile-interests">Coding, AI, Web Development</span></p>
+    <button class="edit-btn" onclick="toggleEditForm()">Edit</button>
+
+    <div id="edit-form" style="display: none; margin-top: 20px;">
+      <input type="text" id="edit-name" placeholder="Name">
+      <input type="email" id="edit-email" placeholder="Email">
+      <input type="text" id="edit-major" placeholder="Major">
+      <input type="text" id="edit-interests" placeholder="Interests">
+      <button class="save-btn" onclick="saveProfile()">Save</button>
+    </div>
   </div>
 
   <script>
@@ -139,6 +155,29 @@
       document.getElementById('profile-page').style.display = 'none';
 
       document.getElementById(`${page}-page`).style.display = 'block';
+    }
+
+    function toggleEditForm() {
+      const form = document.getElementById('edit-form');
+      const currentDisplay = form.style.display;
+      form.style.display = currentDisplay === 'none' ? 'block' : 'none';
+
+      // Prefill form with current values
+      document.getElementById('edit-name').value = document.getElementById('profile-name').innerText;
+      document.getElementById('edit-email').value = document.getElementById('profile-email').innerText;
+      document.getElementById('edit-major').value = document.getElementById('profile-major').innerText;
+      document.getElementById('edit-interests').value = document.getElementById('profile-interests').innerText;
+    }
+
+    function saveProfile() {
+      document.getElementById('profile-name').innerText = document.getElementById('edit-name').value;
+      document.getElementById('profile-email').innerText = document.getElementById('edit-email').value;
+      document.getElementById('profile-major').innerText = document.getElementById('edit-major').value;
+      document.getElementById('profile-interests').innerText = document.getElementById('edit-interests').value;
+
+      // Hide form after saving
+      document.getElementById('edit-form').style.display = 'none';
+      alert('Profile updated successfully!');
     }
   </script>
 </body>

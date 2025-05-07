@@ -53,15 +53,16 @@
       border: 1px solid #ccc;
       font-size: 14px;
     }
-    .form-group button {
+    .form-group button, .edit-btn, .save-btn {
       padding: 10px 20px;
       background-color: #2c3e50;
       color: white;
       border: none;
       border-radius: 5px;
       cursor: pointer;
+      margin-top: 10px;
     }
-    .form-group button:hover {
+    .form-group button:hover, .edit-btn:hover, .save-btn:hover {
       background-color: #1a252f;
     }
     table {
@@ -79,6 +80,10 @@
     }
     th {
       background-color: #ecf0f1;
+    }
+    input[type="text"], input[type="email"] {
+      width: 300px;
+      max-width: 100%;
     }
   </style>
 </head>
@@ -183,9 +188,17 @@
 
   <div class="container" id="profile-page" style="display: none;">
     <h2>Profile</h2>
-    <p>Company Name: Acme Corp</p>
-    <p>Contact Email: hr@acmecorp.com</p>
-    <p>Industry: Marketing & IT Services</p>
+    <p><strong>Company Name:</strong> <span id="profile-company">Acme Corp</span></p>
+    <p><strong>Contact Email:</strong> <span id="profile-email">hr@acmecorp.com</span></p>
+    <p><strong>Industry:</strong> <span id="profile-industry">Marketing & IT Services</span></p>
+    <button class="edit-btn" onclick="toggleEditForm()">Edit</button>
+
+    <div id="edit-form" style="display: none; margin-top: 20px;">
+      <input type="text" id="edit-company" placeholder="Company Name">
+      <input type="email" id="edit-email" placeholder="Contact Email">
+      <input type="text" id="edit-industry" placeholder="Industry">
+      <button class="save-btn" onclick="saveProfile()">Save</button>
+    </div>
   </div>
 
   <script>
@@ -195,6 +208,26 @@
       document.getElementById('profile-page').style.display = 'none';
 
       document.getElementById(`${page}-page`).style.display = 'block';
+    }
+
+    function toggleEditForm() {
+      const form = document.getElementById('edit-form');
+      const display = form.style.display;
+      form.style.display = display === 'none' ? 'block' : 'none';
+
+      // Prefill current values
+      document.getElementById('edit-company').value = document.getElementById('profile-company').innerText;
+      document.getElementById('edit-email').value = document.getElementById('profile-email').innerText;
+      document.getElementById('edit-industry').value = document.getElementById('profile-industry').innerText;
+    }
+
+    function saveProfile() {
+      document.getElementById('profile-company').innerText = document.getElementById('edit-company').value;
+      document.getElementById('profile-email').innerText = document.getElementById('edit-email').value;
+      document.getElementById('profile-industry').innerText = document.getElementById('edit-industry').value;
+
+      document.getElementById('edit-form').style.display = 'none';
+      alert('Profile updated successfully!');
     }
   </script>
 </body>

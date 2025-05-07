@@ -75,6 +75,13 @@
     .job-card button:hover {
       background-color: #7d3c98;
     }
+    input {
+      padding: 5px;
+      margin: 5px 0;
+      width: 100%;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
   </style>
 </head>
 <body>
@@ -125,11 +132,21 @@
 
   <div class="container" id="profile-page" style="display: none;">
     <h2>Profile</h2>
-    <p>Name: Jane Smith</p>
-    <p>Email: janesmith@example.com</p>
-    <p>Major: BBA (Business Administration)</p>
-    <p>Interests: Marketing, Sales, HR, Business Analysis</p>
-    <button>Edit</button>
+    <div id="profile-view">
+      <p><strong>Name:</strong> <span id="view-name">Jane Smith</span></p>
+      <p><strong>Email:</strong> <span id="view-email">janesmith@example.com</span></p>
+      <p><strong>Major:</strong> <span id="view-major">BBA (Business Administration)</span></p>
+      <p><strong>Interests:</strong> <span id="view-interests">Marketing, Sales, HR, Business Analysis</span></p>
+    </div>
+
+    <div id="profile-edit" style="display: none;">
+      <p><strong>Name:</strong> <input type="text" id="edit-name" value="Jane Smith"></p>
+      <p><strong>Email:</strong> <input type="email" id="edit-email" value="janesmith@example.com"></p>
+      <p><strong>Major:</strong> <input type="text" id="edit-major" value="BBA (Business Administration)"></p>
+      <p><strong>Interests:</strong> <input type="text" id="edit-interests" value="Marketing, Sales, HR, Business Analysis"></p>
+    </div>
+
+    <button id="edit-btn" onclick="toggleEdit()">Edit</button>
   </div>
 
   <script>
@@ -139,6 +156,29 @@
       document.getElementById('profile-page').style.display = 'none';
 
       document.getElementById(`${page}-page`).style.display = 'block';
+    }
+
+    function toggleEdit() {
+      const viewDiv = document.getElementById('profile-view');
+      const editDiv = document.getElementById('profile-edit');
+      const editBtn = document.getElementById('edit-btn');
+
+      if (editDiv.style.display === 'none') {
+        // Switch to edit mode
+        editDiv.style.display = 'block';
+        viewDiv.style.display = 'none';
+        editBtn.textContent = 'Save';
+      } else {
+        // Save changes and switch to view mode
+        document.getElementById('view-name').textContent = document.getElementById('edit-name').value;
+        document.getElementById('view-email').textContent = document.getElementById('edit-email').value;
+        document.getElementById('view-major').textContent = document.getElementById('edit-major').value;
+        document.getElementById('view-interests').textContent = document.getElementById('edit-interests').value;
+
+        editDiv.style.display = 'none';
+        viewDiv.style.display = 'block';
+        editBtn.textContent = 'Edit';
+      }
     }
   </script>
 </body>
