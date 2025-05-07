@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student Dashboard</title>
+  <title>Job Seeker Dashboard</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 0;
-      background-color: #f4f6f8;
+      background-color: #f9f9f9;
     }
     nav {
-      background-color: #2c3e50;
+      background-color: #8e44ad;
       padding: 15px;
       display: flex;
       justify-content: space-between;
@@ -41,7 +41,7 @@
       padding: 30px;
     }
     h2 {
-      color: #34495e;
+      color: #6c3483;
     }
     .job-list {
       display: grid;
@@ -57,7 +57,7 @@
     }
     .job-card h3 {
       margin-top: 0;
-      color: #2c3e50;
+      color: #8e44ad;
     }
     .job-card p {
       font-size: 14px;
@@ -66,20 +66,20 @@
     .job-card button {
       margin-top: 10px;
       padding: 8px 15px;
-      background-color: #3498db;
+      background-color: #9b59b6;
       color: white;
       border: none;
       border-radius: 5px;
       cursor: pointer;
     }
     .job-card button:hover {
-      background-color: #2980b9;
+      background-color: #7d3c98;
     }
   </style>
 </head>
 <body>
   <nav>
-    <div class="logo">Student Dashboard</div>
+    <div class="logo">Job Seeker Dashboard</div>
     <ul>
       <li><a href="#dashboard" onclick="showPage('dashboard')">Dashboard</a></li>
       <li><a href="#suggestion" onclick="showPage('suggestion')">AI Suggestions</a></li>
@@ -91,23 +91,23 @@
     <h2>Available Jobs</h2>
     <div class="job-list">
       <div class="job-card">
-        <h3>Part-Time Library Assistant</h3>
-        <p>Help manage the university library, assist students, and organize materials. Flexible hours.</p>
+        <h3>Part-Time Marketing Assistant</h3>
+        <p>Assist the marketing team with campaigns, social media, and outreach. Great for BBA students.</p>
         <button>Apply</button>
       </div>
       <div class="job-card">
-        <h3>Junior Web Developer</h3>
-        <p>Work with the IT department on small coding projects and website maintenance. Knowledge of HTML/CSS required.</p>
+        <h3>Sales Intern</h3>
+        <p>Support the sales department, engage with clients, and learn negotiation skills. Perfect for business students.</p>
         <button>Apply</button>
       </div>
       <div class="job-card">
-        <h3>Data Entry (Remote)</h3>
-        <p>Enter research data into spreadsheets and maintain records. Attention to detail is important.</p>
+        <h3>HR Assistant (Remote)</h3>
+        <p>Help with recruitment processes, screening resumes, and scheduling interviews.</p>
         <button>Apply</button>
       </div>
       <div class="job-card">
-        <h3>Python Coding Intern</h3>
-        <p>Assist the development team with Python scripts and automation tasks. Great opportunity to learn coding skills.</p>
+        <h3>Business Analyst Intern</h3>
+        <p>Analyze business data, prepare reports, and assist in strategic planning projects.</p>
         <button>Apply</button>
       </div>
     </div>
@@ -115,20 +115,20 @@
 
   <div class="container" id="suggestion-page" style="display: none;">
     <h2>AI Suggestions</h2>
-    <p>Based on your profile, here are some recommended job types for you:</p>
+    <p>Based on your BBA background, here are some recommended roles:</p>
     <ul>
-      <li>Software Development Internship</li>
-      <li>Part-Time IT Support</li>
-      <li>Research Assistant in Computer Science Department</li>
+      <li>Market Research Analyst</li>
+      <li>Financial Analyst Assistant</li>
+      <li>Operations Management Trainee</li>
     </ul>
   </div>
 
   <div class="container" id="profile-page" style="display: none;">
     <h2>Profile</h2>
-    <p>Name: John Doe</p>
-    <p>Email: johndoe@example.com</p>
-    <p>Major: Computer Science</p>
-    <p>Interests: Coding, AI, Web Development</p>
+    <p>Name: Jane Smith</p>
+    <p>Email: janesmith@example.com</p>
+    <p>Major: BBA (Business Administration)</p>
+    <p>Interests: Marketing, Sales, HR, Business Analysis</p>
     <button>Edit</button>
   </div>
 
